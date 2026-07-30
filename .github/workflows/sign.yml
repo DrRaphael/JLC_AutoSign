@@ -33,5 +33,5 @@ jobs:
 
       - name: Run test.py
         run: |
-          python3 test.py
+          python3 JLC.py
         # 同样，env 继承自 Job，无需重复设置
