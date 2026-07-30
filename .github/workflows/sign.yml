@@ -26,7 +26,8 @@ jobs:
           else
             echo "No requirements.txt found, skipping installation."
           fi
-
+        env:
+          API_TOKEN: ${{ secrets.API_TOKEN }}   # 从环境获取
       - name: Run test.py
         run: |
           python3 test.py
