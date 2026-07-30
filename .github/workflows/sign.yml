@@ -1,0 +1,32 @@
+name: Daily Run test.py at Beijing 9:00
+
+on:
+  schedule:
+    # 北京时间每天 9:00 → UTC 时间 1:00
+    - cron: '0 1 * * *'
+  workflow_dispatch:  # 允许手动触发，便于调试
+
+jobs:
+  run-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'  # 可根据需要指定版本，如 '3.11'
+
+      - name: Install dependencies (if any)
+        run: |
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            echo "No requirements.txt found, skipping installation."
+          fi
+
+      - name: Run test.py
+        run: |
+          python test.py
