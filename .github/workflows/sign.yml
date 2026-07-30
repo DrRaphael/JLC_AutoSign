@@ -29,4 +29,4 @@ jobs:
 
       - name: Run test.py
         run: |
-          python test.py
+          python3 test.py
