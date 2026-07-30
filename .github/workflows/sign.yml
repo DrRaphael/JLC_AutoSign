@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: TOKEN   # ⬅️ 指定环境名称（需先在 Settings → Environments 中创建）
     env:                     # ⬅️ 将环境变量放在 Job 级别，所有步骤都可使用
-      API_TOKEN: ${{ secrets.TOKEN_LIST }}
+      TOKEN_LIST: ${{ secrets.TOKEN_LIST }}
 
     steps:
       - name: Checkout repository
