@@ -1,9 +1,24 @@
 # -*- coding: UTF-8 -*-
-import requests
+import subprocess, sys, os, importlib
+
+# ======================【自动安装缺失依赖】======================
+_REQUIRED = {
+    'requests': 'requests',
+}
+
+for _mod, _pkg in _REQUIRED.items():
+    try:
+        importlib.import_module(_mod)
+    except ImportError:
+        print(f"[自动安装] 正在安装 {_pkg} ...")
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install', _pkg, '-q'])
+        print(f"[自动安装] {_pkg} 安装完成")
+# =================================================================
+
 import json
 import time
 import random
-import os  # 新增导入 os 模块
+import requests
 from requests.exceptions import RequestException
 
 # ======================【从 GitHub Actions 环境变量获取 Token】======================
