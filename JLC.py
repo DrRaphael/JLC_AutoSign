@@ -3,11 +3,12 @@ import requests
 import json
 import time
 import random
+import os  # 新增导入 os 模块
 from requests.exceptions import RequestException
 
-# ======================【硬编码配置区，填写你的token，多账号英文逗号分隔】======================
-TOKEN_LIST = ""
-# ==========================================================================================
+# ======================【从 GitHub Actions 环境变量获取 Token】======================
+TOKEN_LIST = os.environ.get('TOKEN_LIST', '')   # 优先读取环境变量，若未设置则为空字符串
+# ==================================================================================
 
 # -------- 嘉立创商城接口（原有签到不变） --------
 SIGN_URL = 'https://m.jlc.com/api/activity/sign/signIn?source=3'
@@ -89,11 +90,10 @@ def jlc_shop_sign(access_token):
         print(f"❌【商城-{mask_tk}】未知错误：{str(e)}")
 
 
-
 def main():
     token_arr = [tk.strip() for tk in TOKEN_LIST.split(",") if tk.strip()]
     if not token_arr:
-        print("❌ 请在代码中填写TOKEN_LIST！")
+        print("❌ 请在 GitHub Actions 的环境变量中设置 TOKEN_LIST！")  # 修改提示信息
         return
     print(f"🏁 总计{len(token_arr)}个账号，开始商城平台签到")
 
