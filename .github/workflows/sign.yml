@@ -1,4 +1,4 @@
-name: Daily Run test.py at Beijing 9:00
+name: Daily Run JLC.py at Beijing 9:00
 
 on:
   schedule:
@@ -31,7 +31,7 @@ jobs:
           fi
         # 此处不再单独设置 env，因为 Job 级别已设置
 
-      - name: Run test.py
+      - name: Run JLC.py
         run: |
           pip3 install -r requirements.txt
           python3 JLC.py
