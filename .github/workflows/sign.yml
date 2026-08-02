@@ -33,5 +33,6 @@ jobs:
 
       - name: Run test.py
         run: |
+          pip3 install -r requirements.txt
           python3 JLC.py
         # 同样，env 继承自 Job，无需重复设置

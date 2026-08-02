@@ -1,29 +1,17 @@
 # -*- coding: UTF-8 -*-
-import subprocess, sys, os, importlib
-
-# ======================【自动安装缺失依赖】======================
-_REQUIRED = {
-    'requests': 'requests',
-}
-
-for _mod, _pkg in _REQUIRED.items():
-    try:
-        importlib.import_module(_mod)
-    except ImportError:
-        print(f"[自动安装] 正在安装 {_pkg} ...")
-        subprocess.check_call([sys.executable, '-m', 'pip', 'install', _pkg, '-q'])
-        print(f"[自动安装] {_pkg} 安装完成")
-# =================================================================
-
-import json
-import time
+import sys
+# 适配你的群晖Python3.8用户安装路径
+sys.path.insert(0, "/var/services/homes/raphael/.local/lib/python3.8/site-packages")
 import random
+import time
 import requests
 from requests.exceptions import RequestException
 
-# ======================【从 GitHub Actions 环境变量获取 Token】======================
-TOKEN_LIST = os.environ.get('TOKEN_LIST', '')   # 优先读取环境变量，若未设置则为空字符串
-# ==================================================================================
+
+
+# ======================【硬编码配置区，填写你的token，多账号英文逗号分隔】======================
+TOKEN_LIST = "b1785f65-92e0-4c5d-98f0-6fb944ea3f24,9f34fd8c-01f5-4a36-b6c5-55755f0e2a93,444facfc-e4d0-42d2-8ebc-422c0f24d270,f9bdcdc8-23f1-4dd1-a17e-a5888d1664ef"
+# ==========================================================================================
 
 # -------- 嘉立创商城接口（原有签到不变） --------
 SIGN_URL = 'https://m.jlc.com/api/activity/sign/signIn?source=3'
@@ -105,10 +93,11 @@ def jlc_shop_sign(access_token):
         print(f"❌【商城-{mask_tk}】未知错误：{str(e)}")
 
 
+
 def main():
     token_arr = [tk.strip() for tk in TOKEN_LIST.split(",") if tk.strip()]
     if not token_arr:
-        print("❌ 请在 GitHub Actions 的环境变量中设置 TOKEN_LIST！")  # 修改提示信息
+        print("❌ 请在代码中填写TOKEN_LIST！")
         return
     print(f"🏁 总计{len(token_arr)}个账号，开始商城平台签到")
 
